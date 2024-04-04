@@ -4,6 +4,7 @@ import (
     "fmt"
     "math/big"
     "strings"
+    "strconv"
 )
 
 func factorial(number int) *big.Int {
@@ -29,12 +30,18 @@ func generateNick(name, surname string) string {
     return strings.ToLower(name[:3] + surname[1:4])
 }
 
-func generateAscii(nick string) [6]int {
-    var result [6]int
+func generateAsciiCodesAsStrings(nick string) [6]string {
+    var result [6]string
     for i := 0; i <= 5; i++ {
-        result[i] = int(nick[i])
+        result[i] = strconv.Itoa(int(nick[i]))
     }
     return result
+}
+
+func isStrongNumber(asciiCodes [6]string, number *big.Int) bool {
+    controlSum := 0
+    numberAsStr := number.String()
+    return true
 }
 
 func main() {
