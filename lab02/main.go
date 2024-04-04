@@ -6,7 +6,7 @@ import (
     "strings"
 )
 
-func factorial(number int) *big.Int{
+func factorial(number int) *big.Int {
     result := big.NewInt(1)
     for i := 1; i < number; i++ {
         result.Mul(result, big.NewInt(int64(i)))
@@ -14,8 +14,11 @@ func factorial(number int) *big.Int{
     return result
 }
 
-func fib(number uint) uint {
-    return number
+func fib(number uint64) uint64 {
+    if number <= 1 {
+        return number
+    }
+    return fib(number - 1) + fib(number - 2)
 }
 
 func containsSubstring(container, containee string) bool {
@@ -41,4 +44,8 @@ func main() {
     nick := generateNick(`Konrad`, `Kreczko`)
     fmt.Println(nick)
     fmt.Println(generateAscii(nick))
+    fmt.Println(fib(3))
+    fmt.Println(fib(4))
+    fmt.Println(fib(5))
+    fmt.Println(fib(40))
 }
