@@ -7,6 +7,8 @@ import (
     "strconv"
 )
 
+var callCount map[int]int
+
 func factorial(number int) *big.Int {
     result := big.NewInt(1)
     for i := 1; i <= number; i++ {
@@ -15,11 +17,24 @@ func factorial(number int) *big.Int {
     return result
 }
 
-func fib(number uint64) uint64 {
-    if number <= 1 {
-        return number
+func fib(n int) int {
+    if n <= 1 {
+        return n
     }
-    return fib(number - 1) + fib(number - 2)
+
+    if val, ok := callCount[n]; ok {
+        return val
+    }
+
+    fibNMinus1 := fib(n - 1)
+    fibNMinus2 := fib(n - 2)
+
+    callCount[n] = fibNMinus1 + fibNMinus2
+
+    callCount[n-1]++
+    callCount[n-2]++
+
+    return fibNMinus1 + fibNMinus2
 }
 
 func containsSubstring(container, containee string) int {
@@ -55,14 +70,21 @@ func isStrongNumber(asciiCodes [6]string, number *big.Int) bool {
 func findStrongNumber(name, surname string) int {
     nick := generateNick(name, surname)
     asciiCodes := generateAsciiCodesAsStrings(nick)
+
     for i := 0 ; ; i++ {
         if isStrongNumber(asciiCodes, factorial(i)) {
             return i
         }
     }
+
     return 0
 }
 
 func main() {
-    fmt.Println(findStrongNumber("Piotr", "Karl"))
+    callCount = make(map[int]int)
+    fib(30)
+    fmt.Println(findStrongNumber("Konrad", "Kreczko"))
+    for i := 0; i <= 30; i++ {
+        fmt.Printf("F(%d) = %d, wywołań: %d\n", i, fib(i), callCount[30-i])
+    }
 }
