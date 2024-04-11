@@ -9,8 +9,8 @@ func main() {
     game_rounds := 1000000
     player_wins_staying := 0
     player_wins_switching := 0
-    is_staying := false
-    // is_staying := true
+    // is_staying := false
+    is_staying := true
    
     for i := 0; i < game_rounds; i++ {
         var single_round [3]int
